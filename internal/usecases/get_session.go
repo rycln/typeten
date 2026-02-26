@@ -4,16 +4,20 @@ import (
 	"context"
 	"fmt"
 	"typeten/internal/domain"
-	"typeten/internal/repository"
 )
+
+// getSessionSessionRepo defines the session repository methods needed for this use case.
+type getSessionSessionRepo interface {
+	GetByID(ctx context.Context, id domain.SessionID) (*domain.Session, error)
+}
 
 // GetSessionUseCase handles retrieving a session by ID.
 type GetSessionUseCase struct {
-	sessionRepo repository.SessionRepository
+	sessionRepo getSessionSessionRepo
 }
 
 // NewGetSessionUseCase creates a new GetSessionUseCase.
-func NewGetSessionUseCase(sessionRepo repository.SessionRepository) *GetSessionUseCase {
+func NewGetSessionUseCase(sessionRepo getSessionSessionRepo) *GetSessionUseCase {
 	return &GetSessionUseCase{
 		sessionRepo: sessionRepo,
 	}
@@ -35,6 +39,6 @@ func (uc *GetSessionUseCase) Execute(ctx context.Context, input GetSessionInput)
 	if err != nil {
 		return nil, fmt.Errorf("session not found: %w", err)
 	}
-	
+
 	return &GetSessionOutput{Session: session}, nil
 }
