@@ -7,30 +7,30 @@ import (
 	"typeten/internal/domain"
 )
 
-// CreateSessionUserRepo defines operations for user persistence.
-type CreateSessionUserRepo interface {
+// createSessionUserRepo defines the user repository methods needed for this use case.
+type createSessionUserRepo interface {
 	GetByID(ctx context.Context, id domain.UserID) (*domain.User, error)
 }
 
-// CreateSessionTextRepo operations for text persistence.
-type CreateSessionTextRepo interface {
+// createSessionTextRepo defines the text repository methods needed for this use case.
+type createSessionTextRepo interface {
 	GetTextInfo(ctx context.Context, id domain.TextID) (*domain.TextInfo, error)
 }
 
-// CreateSessionSessionRepo defines operations for session persistence.
-type CreateSessionSessionRepo interface {
+// createSessionSessionRepo defines the session repository methods needed for this use case.
+type createSessionSessionRepo interface {
 	Create(ctx context.Context, session *domain.Session) error
 }
 
 // CreateSessionUseCase handles creating a new typing session.
 type CreateSessionUseCase struct {
-	sessionRepo CreateSessionSessionRepo
-	textRepo    CreateSessionTextRepo
-	userRepo    CreateSessionUserRepo
+	sessionRepo createSessionSessionRepo
+	textRepo    createSessionTextRepo
+	userRepo    createSessionUserRepo
 }
 
 // NewCreateSessionUseCase creates a new CreateSessionUseCase.
-func NewCreateSessionUseCase(sessionRepo CreateSessionSessionRepo, textRepo CreateSessionTextRepo, userRepo CreateSessionUserRepo) *CreateSessionUseCase {
+func NewCreateSessionUseCase(sessionRepo createSessionSessionRepo, textRepo createSessionTextRepo, userRepo createSessionUserRepo) *CreateSessionUseCase {
 	return &CreateSessionUseCase{
 		sessionRepo: sessionRepo,
 		textRepo:    textRepo,
