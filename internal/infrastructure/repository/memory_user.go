@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"sync"
 	"typeten/internal/domain"
-	"typeten/internal/repository"
 )
 
 // MemoryUserRepository is an in-memory implementation of UserRepository.
@@ -16,7 +15,7 @@ type MemoryUserRepository struct {
 }
 
 // NewMemoryUserRepository creates a new in-memory user repository.
-func NewMemoryUserRepository() repository.UserRepository {
+func NewMemoryUserRepository() *MemoryUserRepository {
 	return &MemoryUserRepository{
 		users:   make(map[domain.UserID]*domain.User),
 		byEmail: make(map[string]*domain.User),

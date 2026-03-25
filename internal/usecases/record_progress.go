@@ -5,16 +5,21 @@ import (
 	"fmt"
 	"time"
 	"typeten/internal/domain"
-	"typeten/internal/repository"
 )
+
+// recordProgressSessionRepo defines operations needed to update session progress.
+type recordProgressSessionRepo interface {
+	GetByID(ctx context.Context, id domain.SessionID) (*domain.Session, error)
+	Update(ctx context.Context, session *domain.Session) error
+}
 
 // RecordProgressUseCase handles recording typing progress for a session.
 type RecordProgressUseCase struct {
-	sessionRepo repository.SessionRepository
+	sessionRepo recordProgressSessionRepo
 }
 
 // NewRecordProgressUseCase creates a new RecordProgressUseCase.
-func NewRecordProgressUseCase(sessionRepo repository.SessionRepository) *RecordProgressUseCase {
+func NewRecordProgressUseCase(sessionRepo recordProgressSessionRepo) *RecordProgressUseCase {
 	return &RecordProgressUseCase{
 		sessionRepo: sessionRepo,
 	}

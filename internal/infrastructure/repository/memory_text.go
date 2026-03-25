@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"sync"
 	"typeten/internal/domain"
-	"typeten/internal/repository"
 )
 
 // MemoryTextRepository is an in-memory implementation of TextRepository.
@@ -18,7 +17,7 @@ type MemoryTextRepository struct {
 }
 
 // NewMemoryTextRepository creates a new in-memory text repository.
-func NewMemoryTextRepository() repository.TextRepository {
+func NewMemoryTextRepository() *MemoryTextRepository {
 	return &MemoryTextRepository{
 		texts:     make(map[domain.TextID]*domain.TextInfo),
 		byUser:    make(map[domain.UserID][]*domain.TextInfo),

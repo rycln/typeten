@@ -5,16 +5,21 @@ import (
 	"fmt"
 	"sort"
 	"typeten/internal/domain"
-	"typeten/internal/repository"
 )
+
+// getTextFragmentsTextRepo defines operations required to fetch text fragments.
+type getTextFragmentsTextRepo interface {
+	GetTextInfo(ctx context.Context, id domain.TextID) (*domain.TextInfo, error)
+	GetFragmentsByTextID(ctx context.Context, textID domain.TextID) ([]*domain.TextFragment, error)
+}
 
 // GetTextFragmentsUseCase handles retrieving fragments for a text.
 type GetTextFragmentsUseCase struct {
-	textRepo repository.TextRepository
+	textRepo getTextFragmentsTextRepo
 }
 
 // NewGetTextFragmentsUseCase creates a new GetTextFragmentsUseCase.
-func NewGetTextFragmentsUseCase(textRepo repository.TextRepository) *GetTextFragmentsUseCase {
+func NewGetTextFragmentsUseCase(textRepo getTextFragmentsTextRepo) *GetTextFragmentsUseCase {
 	return &GetTextFragmentsUseCase{
 		textRepo: textRepo,
 	}
