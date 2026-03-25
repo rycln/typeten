@@ -6,18 +6,18 @@ import (
 	"typeten/internal/domain"
 )
 
-// GetSessionSessionRepo defines operations needed to fetch a session.
-type GetSessionSessionRepo interface {
+// getSessionSessionRepo defines operations needed to fetch a session.
+type getSessionSessionRepo interface {
 	GetByID(ctx context.Context, id domain.SessionID) (*domain.Session, error)
 }
 
 // GetSessionUseCase handles retrieving a session by ID.
 type GetSessionUseCase struct {
-	sessionRepo GetSessionSessionRepo
+	sessionRepo getSessionSessionRepo
 }
 
 // NewGetSessionUseCase creates a new GetSessionUseCase.
-func NewGetSessionUseCase(sessionRepo GetSessionSessionRepo) *GetSessionUseCase {
+func NewGetSessionUseCase(sessionRepo getSessionSessionRepo) *GetSessionUseCase {
 	return &GetSessionUseCase{
 		sessionRepo: sessionRepo,
 	}

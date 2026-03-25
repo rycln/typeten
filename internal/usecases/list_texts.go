@@ -6,24 +6,24 @@ import (
 	"typeten/internal/domain"
 )
 
-// ListTextsUserRepo defines operations needed to validate a user exists.
-type ListTextsUserRepo interface {
+// listTextsUserRepo defines operations needed to validate a user exists.
+type listTextsUserRepo interface {
 	GetByID(ctx context.Context, id domain.UserID) (*domain.User, error)
 }
 
-// ListTextsTextRepo defines operations needed to list texts for a user.
-type ListTextsTextRepo interface {
+// listTextsTextRepo defines operations needed to list texts for a user.
+type listTextsTextRepo interface {
 	ListByUserID(ctx context.Context, userID domain.UserID) ([]*domain.TextInfo, error)
 }
 
 // ListTextsUseCase handles listing texts for a user.
 type ListTextsUseCase struct {
-	textRepo ListTextsTextRepo
-	userRepo ListTextsUserRepo
+	textRepo listTextsTextRepo
+	userRepo listTextsUserRepo
 }
 
 // NewListTextsUseCase creates a new ListTextsUseCase.
-func NewListTextsUseCase(textRepo ListTextsTextRepo, userRepo ListTextsUserRepo) *ListTextsUseCase {
+func NewListTextsUseCase(textRepo listTextsTextRepo, userRepo listTextsUserRepo) *ListTextsUseCase {
 	return &ListTextsUseCase{
 		textRepo: textRepo,
 		userRepo: userRepo,
