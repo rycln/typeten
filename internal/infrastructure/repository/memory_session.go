@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"sync"
 	"typeten/internal/domain"
-	"typeten/internal/repository"
 )
 
 // MemorySessionRepository is an in-memory implementation of SessionRepository.
@@ -16,7 +15,7 @@ type MemorySessionRepository struct {
 }
 
 // NewMemorySessionRepository creates a new in-memory session repository.
-func NewMemorySessionRepository() repository.SessionRepository {
+func NewMemorySessionRepository() *MemorySessionRepository {
 	return &MemorySessionRepository{
 		sessions: make(map[domain.SessionID]*domain.Session),
 		byUser:   make(map[domain.UserID][]*domain.Session),
