@@ -4,17 +4,26 @@ import (
 	"context"
 	"fmt"
 	"typeten/internal/domain"
-	"typeten/internal/repository"
 )
+
+// ListTextsUserRepo defines operations needed to validate a user exists.
+type ListTextsUserRepo interface {
+	GetByID(ctx context.Context, id domain.UserID) (*domain.User, error)
+}
+
+// ListTextsTextRepo defines operations needed to list texts for a user.
+type ListTextsTextRepo interface {
+	ListByUserID(ctx context.Context, userID domain.UserID) ([]*domain.TextInfo, error)
+}
 
 // ListTextsUseCase handles listing texts for a user.
 type ListTextsUseCase struct {
-	textRepo repository.TextRepository
-	userRepo repository.UserRepository
+	textRepo ListTextsTextRepo
+	userRepo ListTextsUserRepo
 }
 
 // NewListTextsUseCase creates a new ListTextsUseCase.
-func NewListTextsUseCase(textRepo repository.TextRepository, userRepo repository.UserRepository) *ListTextsUseCase {
+func NewListTextsUseCase(textRepo ListTextsTextRepo, userRepo ListTextsUserRepo) *ListTextsUseCase {
 	return &ListTextsUseCase{
 		textRepo: textRepo,
 		userRepo: userRepo,

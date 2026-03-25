@@ -5,18 +5,28 @@ import (
 	"fmt"
 	"time"
 	"typeten/internal/domain"
-	"typeten/internal/repository"
 )
+
+// CreateTextUserRepo defines operations needed to validate a user exists.
+type CreateTextUserRepo interface {
+	GetByID(ctx context.Context, id domain.UserID) (*domain.User, error)
+}
+
+// CreateTextTextRepo defines operations needed to persist text + fragments.
+type CreateTextTextRepo interface {
+	CreateTextInfo(ctx context.Context, info *domain.TextInfo) error
+	CreateFragment(ctx context.Context, fragment *domain.TextFragment) error
+}
 
 // CreateTextUseCase handles uploading and processing a new text.
 type CreateTextUseCase struct {
-	textRepo      repository.TextRepository
-	userRepo      repository.UserRepository
+	textRepo      CreateTextTextRepo
+	userRepo      CreateTextUserRepo
 	textProcessor *TextProcessor
 }
 
 // NewCreateTextUseCase creates a new CreateTextUseCase.
-func NewCreateTextUseCase(textRepo repository.TextRepository, userRepo repository.UserRepository, fragmentSize int) *CreateTextUseCase {
+func NewCreateTextUseCase(textRepo CreateTextTextRepo, userRepo CreateTextUserRepo, fragmentSize int) *CreateTextUseCase {
 	return &CreateTextUseCase{
 		textRepo:      textRepo,
 		userRepo:      userRepo,
