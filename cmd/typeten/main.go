@@ -13,7 +13,6 @@ import (
 	"typeten/internal/domain"
 	"typeten/internal/handlers"
 	infraRepo "typeten/internal/infrastructure/repository"
-	"typeten/internal/repository"
 	"typeten/internal/usecases"
 )
 
@@ -105,8 +104,13 @@ func main() {
 	log.Println("Server exited")
 }
 
+type userRepo interface {
+	Create(ctx context.Context, user *domain.User) error
+	GetByID(ctx context.Context, id domain.UserID) (*domain.User, error)
+}
+
 // createDefaultUser creates a default user for MVP testing.
-func createDefaultUser(ctx context.Context, userRepo repository.UserRepository) (*domain.User, error) {
+func createDefaultUser(ctx context.Context, userRepo userRepo) (*domain.User, error) {
 	// Try to get existing user
 	userID := domain.UserID("user_default")
 	user, err := userRepo.GetByID(ctx, userID)
